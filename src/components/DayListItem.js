@@ -8,17 +8,20 @@ export default function DayListItem(props) {
     " day-list__item--full": props.spots === 0,
     " day-list__item--selected": props.selected,
   });
-  const formatSpots = () => {
-    return !props.spots
+  const formatSpots = (spots) => {
+    return !spots
       ? "no spots remaining"
-      : props.spots === 1
+      : spots === 1
       ? "1 spot remaining"
-      : props.spots + " spots remaining";
+      : spots + " spots remaining";
+  };
+  const handleClick = () => {
+    props.setDay(props.name);
   };
   return (
-    <li className={dayClass} onClick={() => props.setDay(props.name)}>
+    <li className={dayClass} onClick={handleClick} selected={props.selected}>
       <h2 className="text--regular">{props.name}</h2>
-      <h3 className="text--light">{formatSpots()}</h3>
+      <h3 className="text--light">{formatSpots(props.spots)}</h3>
     </li>
   );
 }
