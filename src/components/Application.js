@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DayList from "./DayList";
 
 import "components/Application.scss";
+import InterviewerList from "./InterviewerList";
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
@@ -42,6 +43,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {/* <InterviewerList /> */}
       </section>
     </main>
   );

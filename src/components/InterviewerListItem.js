@@ -10,10 +10,7 @@ const InterviewerListItem = (props) => {
     " interviewers__item-image--selected-image": props.selected,
   });
   return (
-    <li
-      className={interviewerClasses}
-      onClick={() => props.setInterviewer(props.id)}
-    >
+    <li className={interviewerClasses} onClick={props.setInterviewer}>
       <img
         className={interviewerImageClasses}
         src={props.avatar}
@@ -25,15 +22,3 @@ const InterviewerListItem = (props) => {
 };
 
 export default InterviewerListItem;
-
-// Therefore, the InterviewerListItem component should receive the following props:
-
-// id:number - the id of the interviewer
-// name:string - the name of the interviewer
-// avatar:url - a url to an image of the interviewer
-// The InterviewerListItem also needs a prop to know if it is selected.
-
-// selected:boolean - determines if an interviewer is selected or not and displays the name and applies appropriate styles if selected.
-// Finally, the InterviewerListItem should receive a function called setInterviewer.
-
-// setInterviewer:function - is run when the InterviewerListItem is clicked. This function receives the interviewer's id as an argument. It sets the selected interviewer.
