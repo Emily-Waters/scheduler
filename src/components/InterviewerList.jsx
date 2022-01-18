@@ -1,5 +1,7 @@
 import React from "react";
+// Components
 import InterviewerListItem from "./InterviewerListItem";
+// Styles
 import "./InterviewerList.scss";
 
 const InterviewerList = (props) => {
