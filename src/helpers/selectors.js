@@ -6,10 +6,10 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  const newInterview = interview;
-  if (!newInterview) {
-    return newInterview;
-  }
-  newInterview.interviewer = state.interviewers[interview.interviewer];
-  return newInterview;
+  return !interview
+    ? interview
+    : {
+        ...interview,
+        interviewer: state.interviewers[interview.interviewer],
+      };
 }
