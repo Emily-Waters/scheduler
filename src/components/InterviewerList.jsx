@@ -4,6 +4,7 @@ import InterviewerListItem from "./InterviewerListItem";
 // Styles
 import "./InterviewerList.scss";
 
+// InterviewerList is a component to display a list of available interviewers for selection on the Form component
 const InterviewerList = (props) => {
   const interviewers = props.interviewers.map((interviewer) => {
     return (

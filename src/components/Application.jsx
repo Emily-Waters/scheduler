@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
+// External Libraries
 import axios from "axios";
-
+// Components
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
-
+// Helpers
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
+// Styles
 import "components/Application.scss";
 
+// Application is the 'home' component that establishes and handles state management, GET's data from the server database used in populating Appointment, Interviewer and Days data
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -70,6 +77,7 @@ export default function Application(props) {
     ],
   });
 
+  // Handles state management for selecting days on the DayList componenet
   const setDay = (day) => {
     setState((prev) => ({
       ...prev,
@@ -77,6 +85,7 @@ export default function Application(props) {
     }));
   };
 
+  // Retrieves data from the server database to populate Appointments, Interviewers and Days
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
@@ -95,6 +104,7 @@ export default function Application(props) {
       .then(() => {});
   }, []);
 
+  // Populates the appointment list for the currently selected day
   const dailyAppointments = getAppointmentsForDay(state, state.day).map(
     (appointments) => {
       return <Appointment key={appointments.id} {...appointments} />;

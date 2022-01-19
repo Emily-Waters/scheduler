@@ -1,19 +1,23 @@
 import React, { useState } from "react";
+// Components
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
+// Form handles booking appointments for students. Form manages state for interview appointments and allows a user to enter their name and select the interviewer and create a new appointment. Form components allow a user to edit and delete appointments.
 export default function Form(props) {
   const { interviewers, onSave } = props;
   const [student, setStudent] = useState(props.student || "");
   const [value, setValue] = useState(student);
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
+  // Resets name value entered by user, and selected interviewer
   const reset = () => {
     setValue("");
     setStudent("");
     setInterviewer("");
   };
 
+  // Cancel resets the form and navigates back
   const cancel = () => {
     reset();
     props.onCancel();
@@ -54,19 +58,3 @@ export default function Form(props) {
     </main>
   );
 }
-
-// The Form component should track the following state:
-
-// student:String
-// interviewer:Number
-// The Form component should have the following actions:
-
-// setStudent:Function
-// setInterviewer:Function
-// The Form component should take the following props:
-
-// student:String
-// interviewers:Array
-// interviewer:Number
-// onSave:Function
-// onCancel:Function

@@ -1,7 +1,10 @@
 import React from "react";
+// Helpers
 import classNames from "classnames";
+// Styles
 import "./InterviewerListItem.scss";
 
+// InterviewerListItem is a component to render and handle behaviour of individual interviewer items. It is used by InterviewerList
 const InterviewerListItem = (props) => {
   const interviewerClasses = classNames("interviewers__item", {
     " interviewers__item--selected": props.selected,
