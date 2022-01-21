@@ -107,7 +107,13 @@ export default function Application(props) {
   // Populates the appointment list for the currently selected day
   const dailyAppointments = getAppointmentsForDay(state, state.day).map(
     (appointments) => {
-      return <Appointment key={appointments.id} {...appointments} />;
+      return (
+        <Appointment
+          key={appointments.id}
+          {...appointments}
+          interviewers={state.interviewers}
+        />
+      );
     }
   );
 
