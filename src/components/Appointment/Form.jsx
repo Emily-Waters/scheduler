@@ -9,7 +9,6 @@ export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [value, setValue] = useState(student);
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-
   // Resets name value entered by user, and selected interviewer
   const reset = () => {
     setValue("");
@@ -21,6 +20,10 @@ export default function Form(props) {
   const cancel = () => {
     reset();
     props.onCancel();
+  };
+
+  const handleClick = () => {
+    onSave(value, interviewer);
   };
 
   return (
@@ -50,7 +53,7 @@ export default function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={onSave}>
+          <Button confirm onClick={handleClick}>
             Save
           </Button>
         </section>

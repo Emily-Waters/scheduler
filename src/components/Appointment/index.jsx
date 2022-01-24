@@ -13,7 +13,15 @@ import "./styles.scss";
 import useVisualMode from "hooks/useVisualMode";
 
 export default function Appointment(props) {
-  const { time, interview, interviewers } = props;
+  const { id, time, interview, interviewers, bookInterview } = props;
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    bookInterview(id, interview);
+  }
 
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -31,21 +39,17 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={interview.student}
-          interviewer={interviewers[interview.interviewer]}
+          interviewer={interview.interviewer}
           onEdit={() => transition(CREATE)}
           onDelete={() => transition(CONFIRM)}
         />
       )}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === CREATE && (
-        <Form
-          interviewers={[]}
-          onSave={() => transition(CONFIRM)}
-          onCancel={() => back()}
-        />
+        <Form interviewers={interviewers} onSave={save} onCancel={back} />
       )}
       {mode === CONFIRM && (
-        <Confirm onDelete={() => back()} onConfirm={() => transition(STATUS)} />
+        <Confirm onDelete={back} onConfirm={() => transition(STATUS)} />
       )}
       {mode === STATUS && <Status message={"Saving"} />}
     </article>

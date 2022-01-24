@@ -17,8 +17,6 @@ export function getInterview(state, interview) {
 export function getInterviewersForDay(state, day) {
   return state.days
     .filter((days) => days.name === day) // Filters day array returning days matching day arg
-    .flatMap((day) => day.appointments) // Seperates appointment ids in filtered day array into a new array
-    .map((dayApps) => state.appointments[dayApps].interview) // Maps a new array of interview objects by appointment id
-    .filter((interviews) => interviews) // Filters out null interviews
-    .map((interviews) => state.interviewers[interviews.interviewer]); // Maps new array of interviewers by interviewer id
+    .flatMap((day) => day.interviewers) // Maps interviewer ids into new flattened array
+    .map((interviewer) => state.interviewers[interviewer]); // Maps new array of interviewer objects matching provided ids
 }
