@@ -22,20 +22,30 @@ export default function Appointment(props) {
       interviewer,
     };
     transition(SAVING);
-    bookInterview(id, interview).then(() => {
-      transition(SHOW);
-    });
+    bookInterview(id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch(() => {
+        transition(ERROR_SAVE, true);
+      });
   }
 
   function deleteInterview() {
     const interview = null;
     transition(DELETING);
-    cancelInterview(id, interview).then(() => {
-      transition(EMPTY);
-    });
+    cancelInterview(id, interview)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(() => {
+        transition(ERROR_DELETE, true);
+      });
   }
 
   const EMPTY = "EMPTY";
+  const ERROR_DELETE = "ERROR_DELETE";
+  const ERROR_SAVE = "ERROR_SAVE";
   const EDIT = "EDIT";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -56,7 +66,7 @@ export default function Appointment(props) {
           student={interview.student}
           interviewer={interview.interviewer}
           onEdit={() => transition(EDIT)}
-          onDelete={() => transition(CONFIRMDELETE)}
+          onDelete={() => transition(CONFIRMDELETE, true)}
         />
       )}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -81,6 +91,18 @@ export default function Appointment(props) {
       )}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETING && <Status message={"Deleting"} />}
+      {mode === ERROR_DELETE && (
+        <Error
+          message={"An Error occured while deleting"}
+          onClose={() => transition(SHOW, true)}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message={"An Error occured while saving"}
+          onClose={() => transition(SHOW, true)}
+        />
+      )}
     </article>
   );
 }
