@@ -30,13 +30,6 @@ export default function Application(props) {
     }));
   };
 
-  const setDays = (days) => {
-    setState((prev) => ({
-      ...prev,
-      days,
-    }));
-  };
-
   // Retrieves data from the server database to populate Appointments, Interviewers and Days
   useEffect(() => {
     Promise.all([
@@ -71,6 +64,23 @@ export default function Application(props) {
     );
   }
 
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { interview },
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    return axios.delete(`/api/appointments/${id}`).then((res) => {
+      setState(() => ({
+        ...state,
+        appointments: appointments,
+      }));
+    });
+  }
+
   // Populates the appointment list for the currently selected day
 
   const appointments = getAppointmentsForDay(state, state.day);
@@ -85,6 +95,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
