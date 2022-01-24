@@ -63,10 +63,12 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
-    setState(() => ({
-      ...state,
-      appointments: appointments,
-    }));
+    return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
+      setState(() => ({
+        ...state,
+        appointments: appointments,
+      }))
+    );
   }
 
   // Populates the appointment list for the currently selected day
