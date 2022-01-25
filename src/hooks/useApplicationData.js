@@ -47,20 +47,18 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    return axios
-      .put(`/api/appointments/${id}`, { interview }, { body: "json" })
-      .then(() =>
-        setState(() => ({
-          ...state,
-          appointments: appointments,
-        }))
-      );
+    return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
+      setState(() => ({
+        ...state,
+        appointments: appointments,
+      }))
+    );
   }
 
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { interview },
+      interview: interview,
     };
     const appointments = {
       ...state.appointments,

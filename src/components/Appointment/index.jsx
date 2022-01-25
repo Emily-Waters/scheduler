@@ -28,11 +28,11 @@ export default function Appointment(props) {
       student: name,
       interviewer,
     };
-    transition(SAVING);
+    transition(SAVING, true);
     bookInterview(id, interview)
       .then(() => {
         transition(SHOW);
-        updateSpots();
+        // updateSpots();
       })
       .catch(() => {
         transition(ERROR_SAVE, true);
@@ -45,7 +45,7 @@ export default function Appointment(props) {
     cancelInterview(id, interview)
       .then(() => {
         transition(EMPTY);
-        updateSpots();
+        // updateSpots();
       })
       .catch(() => {
         transition(ERROR_DELETE, true);
@@ -94,7 +94,7 @@ export default function Appointment(props) {
       {mode === CONFIRMDELETE && (
         <Confirm
           message={"Are you sure you would like to cancel this interview?"}
-          onDelete={back}
+          // onDelete={back}
           onConfirm={deleteInterview}
         />
       )}
