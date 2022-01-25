@@ -20,3 +20,7 @@ export function getInterviewersForDay(state, day) {
     .flatMap((day) => day.interviewers) // Maps interviewer ids into new flattened array
     .map((interviewer) => state.interviewers[interviewer]); // Maps new array of interviewer objects matching provided ids
 }
+
+export function getSpotsForDay(appointments) {
+  return 5 - appointments.filter((appointment) => appointment.interview).length;
+}

@@ -1,7 +1,9 @@
 import axios from "axios";
+import { getSpotsForDay } from "helpers/selectors";
 import { useState, useEffect } from "react";
 
 export default function useApplicationData() {
+  // Establishing state structure for app
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -9,7 +11,7 @@ export default function useApplicationData() {
     interviewers: [],
   });
 
-  // Handles state management for selecting days on the DayList componenet
+  // Handles state management for selecting days on the DayList component
   const setDay = (day) => {
     setState((prev) => ({
       ...prev,
@@ -34,6 +36,7 @@ export default function useApplicationData() {
     });
   }, []);
 
+  // Books interviews by creating a new interview object attached to an appointment selected by id, then replaces the exisiting interview in the appointments list (by id), makes a put request to the server to store the data
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -43,12 +46,15 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
-      setState(() => ({
-        ...state,
-        appointments: appointments,
-      }))
-    );
+
+    return axios
+      .put(`/api/appointments/${id}`, { interview }, { body: "json" })
+      .then(() =>
+        setState(() => ({
+          ...state,
+          appointments: appointments,
+        }))
+      );
   }
 
   function cancelInterview(id, interview) {
@@ -60,15 +66,21 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    return axios
-      .delete(`/api/appointments/${id}`, { interview })
-      .then((res) => {
-        setState(() => ({
-          ...state,
-          appointments: appointments,
-        }));
-      });
+    return axios.delete(`/api/appointments/${id}`).then((res) => {
+      setState(() => ({
+        ...state,
+        appointments: appointments,
+      }));
+    });
   }
 
-  return { state, setDay, bookInterview, cancelInterview };
+  function updateSpots() {}
+
+  return {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview,
+    updateSpots,
+  };
 }

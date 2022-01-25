@@ -13,8 +13,15 @@ import "./styles.scss";
 import useVisualMode from "hooks/useVisualMode";
 
 export default function Appointment(props) {
-  const { id, time, interview, interviewers, bookInterview, cancelInterview } =
-    props;
+  const {
+    id,
+    time,
+    interview,
+    interviewers,
+    bookInterview,
+    cancelInterview,
+    updateSpots,
+  } = props;
 
   function save(name, interviewer) {
     const interview = {
@@ -25,6 +32,7 @@ export default function Appointment(props) {
     bookInterview(id, interview)
       .then(() => {
         transition(SHOW);
+        updateSpots();
       })
       .catch(() => {
         transition(ERROR_SAVE, true);
@@ -37,6 +45,7 @@ export default function Appointment(props) {
     cancelInterview(id, interview)
       .then(() => {
         transition(EMPTY);
+        updateSpots();
       })
       .catch(() => {
         transition(ERROR_DELETE, true);
@@ -100,7 +109,7 @@ export default function Appointment(props) {
       {mode === ERROR_SAVE && (
         <Error
           message={"An Error occured while saving"}
-          onClose={() => transition(SHOW, true)}
+          onClose={() => transition(EMPTY, true)}
         />
       )}
     </article>
