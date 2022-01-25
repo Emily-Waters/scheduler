@@ -21,8 +21,6 @@ export default function Application(props) {
   // Populates the appointment list for the currently selected day
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
-  const spotsForDay = getSpotsForDay(appointments);
-  console.log(spotsForDay);
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     return (

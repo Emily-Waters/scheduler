@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getSpotsForDay } from "helpers/selectors";
 import { useState, useEffect } from "react";
+import { getAllSpots } from "helpers/selectors";
 
 export default function useApplicationData() {
   // Establishing state structure for app
@@ -9,6 +9,7 @@ export default function useApplicationData() {
     days: [],
     appointments: [],
     interviewers: [],
+    spots: 0,
   });
 
   // Handles state management for selecting days on the DayList component
@@ -32,9 +33,10 @@ export default function useApplicationData() {
         days: days.data,
         appointments: appointments.data,
         interviewers: interviewers.data,
+        spots: state.spots,
       }));
     });
-  }, []);
+  }, [state.spots]);
 
   // Books interviews by creating a new interview object attached to an appointment selected by id, then replaces the exisiting interview in the appointments list (by id), makes a put request to the server to store the data
   function bookInterview(id, interview) {
@@ -51,6 +53,7 @@ export default function useApplicationData() {
       setState(() => ({
         ...state,
         appointments: appointments,
+        spots: getAllSpots(state),
       }))
     );
   }
@@ -64,21 +67,20 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
+
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       setState(() => ({
         ...state,
         appointments: appointments,
+        spots: getAllSpots(state),
       }));
     });
   }
-
-  function updateSpots() {}
 
   return {
     state,
     setDay,
     bookInterview,
     cancelInterview,
-    updateSpots,
   };
 }
