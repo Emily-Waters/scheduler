@@ -85,7 +85,7 @@ export default function Appointment(props) {
       {mode === CONFIRMDELETE && (
         <Confirm
           message={"Are you sure you would like to cancel this interview?"}
-          // onDelete={back}
+          onDelete={back}
           onConfirm={deleteInterview}
         />
       )}

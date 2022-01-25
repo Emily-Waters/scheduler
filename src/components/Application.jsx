@@ -7,7 +7,6 @@ import {
   getAppointmentsForDay,
   getInterview,
   getInterviewersForDay,
-  getSpotsForDay,
 } from "helpers/selectors";
 // Hooks
 import useApplicationData from "hooks/useApplicationData";
