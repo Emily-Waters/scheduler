@@ -40,6 +40,7 @@ export default function Form(props) {
             onSubmit={(e) => {
               setStudent(e.target.value);
             }}
+            data-testid="student-name-input"
           />
         </form>
         <InterviewerList
