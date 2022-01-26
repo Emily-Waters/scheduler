@@ -6,18 +6,15 @@ import "components/Button.scss";
 
 // Button handles behaviour and style for buttons. Button is used in Appointments/
 export default function Button(props) {
+  const { onClick, disabled, confirm, danger, children } = props;
   const buttonClass = classNames("button", {
-    " button--confirm": props.confirm,
-    " button--danger": props.danger,
+    " button--confirm": confirm,
+    " button--danger": danger,
   });
 
   return (
-    <button
-      onClick={props.onClick}
-      className={buttonClass}
-      disabled={props.disabled}
-    >
-      {props.children}
+    <button onClick={onClick} className={buttonClass} disabled={disabled}>
+      {children}
     </button>
   );
 }
