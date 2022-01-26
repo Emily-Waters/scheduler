@@ -80,13 +80,8 @@ export default {
     }
   }),
   put: jest.fn((url, res) => {
-    const spotsAvailable = fixtures.days[0].appointments.length;
-    const spotsUsed = fixtures.days[0].appointments
-      .map((id) => fixtures.appointments[id])
-      .filter((apts) => apts.interview).length;
-    const aptId = url[url.length - 1];
-    fixtures.appointments[aptId].interview = res.interview;
-    fixtures.spots++;
+    fixtures.appointments[url[url.length - 1]].interview = res.interview;
+    fixtures.days["0"].spots--;
     return Promise.resolve({
       status: 200,
       statusText: "OK",
@@ -94,13 +89,8 @@ export default {
     });
   }),
   delete: jest.fn((url) => {
-    const spotsAvailable = fixtures.days[0].appointments.length;
-    const spotsUsed = fixtures.days[0].appointments
-      .map((id) => fixtures.appointments[id])
-      .filter((apts) => apts.interview).length;
-    const aptId = url[url.length - 1];
-    fixtures.appointments[aptId].interview = null;
-    fixtures.spots--;
+    fixtures.appointments[url[url.length - 1]].interview = null;
+    fixtures.days["0"].spots++;
     return Promise.resolve({
       status: 200,
       statusText: "OK",

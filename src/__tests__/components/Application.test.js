@@ -57,7 +57,7 @@ describe("Appointment", () => {
     expect(getByText(container, "no spots remaining")).toBeInTheDocument();
   });
 
-  xit("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const cancelBtn = await waitForElement(
@@ -72,7 +72,7 @@ describe("Appointment", () => {
     const day = await waitForElement(() => getAllByTestId(container, "day")[0]);
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
-  xit("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const editBtn = getAllByAltText(container, "Edit")[0];
@@ -83,7 +83,7 @@ describe("Appointment", () => {
     fireEvent.click(saveBtn);
     await waitForElementToBeRemoved(() => getByText(container, "Saving"));
     const day = await waitForElement(() => getAllByTestId(container, "day")[0]);
-    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 });
 

@@ -47,13 +47,12 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    const spots = getAllSpots(state);
 
     return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
       setState(() => ({
         ...state,
         appointments: appointments,
-        spots: spots,
+        spots: getAllSpots(state),
       }))
     );
   }
@@ -68,12 +67,11 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    const spots = getAllSpots(state);
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       setState(() => ({
         ...state,
         appointments: appointments,
-        spots: spots,
+        spots: getAllSpots(state),
       }));
     });
   }
