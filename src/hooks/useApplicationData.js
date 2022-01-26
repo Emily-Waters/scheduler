@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useReducer } from "react";
-import { getAllSpots } from "helpers/selectors";
+import { updateSpots } from "helpers/selectors";
 
 export default function useApplicationData() {
   // Establishing state structure for app
@@ -15,11 +15,11 @@ export default function useApplicationData() {
   const SET_DAY = "SET_DAY";
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
   const SET_INTERVIEW = "SET_INTERVIEW";
+  const SET_SPOTS = "SET_SPOTS";
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function reducer(state, action) {
-    console.log(action);
     switch (action.type) {
       case SET_DAY:
         return {
@@ -34,7 +34,12 @@ export default function useApplicationData() {
           interviewers: action.value.interviewers,
         };
       case SET_INTERVIEW:
-        return { ...state, appointments: action.value };
+        return {
+          ...state,
+          appointments: action.value.appointments,
+          days: action.value.days,
+        };
+
       default:
         return { ...state };
     }
@@ -74,10 +79,14 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
+    const days = updateSpots(state, appointments, id);
 
-    return axios
-      .put(`/api/appointments/${id}`, { interview })
-      .then(() => dispatch({ type: SET_INTERVIEW, value: appointments }));
+    return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
+      dispatch({
+        type: SET_INTERVIEW,
+        value: { appointments: appointments, days: days },
+      })
+    );
   }
 
   function cancelInterview(id, interview) {
@@ -90,10 +99,26 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    return axios
-      .delete(`/api/appointments/${id}`)
-      .then(() => dispatch({ type: SET_INTERVIEW, value: appointments }));
+    const days = updateSpots(state, appointments, id);
+
+    return axios.delete(`/api/appointments/${id}`).then(() =>
+      dispatch({
+        type: SET_INTERVIEW,
+        value: { appointments: appointments, days: days },
+      })
+    );
   }
+
+  const updateSpots = function (state, appointments, id) {
+    const { ...day } = state.days.find((day) => day.name === state.day);
+    const spots = day.appointments
+      .map((id) => appointments[id])
+      .filter((appointment) => !appointment.interview).length;
+    day.spots = spots;
+    const index = state.days.findIndex((day) => day.name === state.day);
+    const days = { ...state.days, [index]: day };
+    return Object.values(days);
+  };
 
   return {
     state,
