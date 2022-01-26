@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { getAllSpots, getSpotsForDay } from "helpers/selectors";
+import { getAllSpots } from "helpers/selectors";
 
 export default function useApplicationData() {
   // Establishing state structure for app

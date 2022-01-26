@@ -27,13 +27,3 @@ export function getAllSpots(state) {
     (appointment) => !appointment.interview
   ).length;
 }
-
-// PASSES TESTS BUT DOESNT WORK IN THE APP
-// export function getInterviewersForDay(state, day) {
-//   return state.days
-//     .filter((days) => days.name === day)
-//     .flatMap((day) => day.appointments)
-//     .filter((appointment) => state.appointments[appointment].interview)
-//     .map((appointment) => state.appointments[appointment].interview.interviewer)
-//     .map((interviewer) => state.interviewers[interviewer]); // Maps new array of interviewer objects matching provided ids
-// }
