@@ -6,7 +6,7 @@ A React app that allows a user to book an interview by choosing an avvailable ap
 
 !['Layout'](https://github.com/Emily-Waters/scheduler/blob/master/public/docs/layout.png)
 !['Delete'](https://github.com/Emily-Waters/scheduler/blob/master/public/docs/delete.png)
-!['Updated Spots'](https://github.com/Emily-Waters/tweeter/blob/master/docs/layout-with-updated-spots.png)
+!['Updated Spots'](https://github.com/Emily-Waters/scheduler/blob/master/public/docs/layout-with-updated-spots.png)
 !['Edit'](https://github.com/Emily-Waters/scheduler/blob/master/public/docs/edit.png)
 
 ## Setup
