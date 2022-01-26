@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { getAllSpots } from "helpers/selectors";
+import { getAllSpots, getSpotsForDay } from "helpers/selectors";
 
 export default function useApplicationData() {
   // Establishing state structure for app
@@ -33,7 +33,6 @@ export default function useApplicationData() {
         days: days.data,
         appointments: appointments.data,
         interviewers: interviewers.data,
-        spots: state.spots,
       }));
     });
   }, [state.spots]);
@@ -48,12 +47,13 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
+    const spots = getAllSpots(state);
 
     return axios.put(`/api/appointments/${id}`, { interview }).then(() =>
       setState(() => ({
         ...state,
         appointments: appointments,
-        spots: getAllSpots(state),
+        spots: spots,
       }))
     );
   }
@@ -68,11 +68,12 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    const spots = getAllSpots(state);
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       setState(() => ({
         ...state,
         appointments: appointments,
-        spots: getAllSpots(state),
+        spots: spots,
       }));
     });
   }

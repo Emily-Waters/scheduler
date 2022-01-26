@@ -18,6 +18,7 @@ const InterviewerListItem = (props) => {
         className={interviewerImageClasses}
         src={props.avatar}
         alt={props.name}
+        data-testid="interviewer-img"
       />
       {props.selected && props.name}
     </li>
