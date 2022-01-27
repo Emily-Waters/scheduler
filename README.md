@@ -22,6 +22,7 @@ react-dom: ^16.9.0,
 react-scripts: “3.0.0”
 }
 
+Fork and clone `the scheduler-api` and follow the instructions to connect to the server db
 scheduler-api
 https://github.com/Emily-Waters/scheduler-api
 
