@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, useReducer } from "react";
-import { updateSpots } from "helpers/selectors";
+import { useEffect, useReducer } from "react";
 
 export default function useApplicationData() {
   // Establishing state structure for app
@@ -48,6 +47,18 @@ export default function useApplicationData() {
   const setDay = (day) => {
     dispatch({ type: SET_DAY, value: day });
   };
+
+  // Websocket
+  useEffect(() => {
+    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    webSocket.onopen = function (event) {
+      webSocket.send("ping");
+    };
+    webSocket.onmessage = function (event) {
+      const parsed = JSON.parse(event.data);
+      console.log(parsed);
+    };
+  }, []);
 
   // Retrieves data from the server database to populate Appointments, Interviewers and Days
   useEffect(() => {
