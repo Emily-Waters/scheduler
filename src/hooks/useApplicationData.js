@@ -75,7 +75,9 @@ export default function useApplicationData() {
       }
     };
     return () => {
-      webSocket.close();
+      if (webSocket.readyState) {
+        webSocket.close();
+      }
     };
   });
 
