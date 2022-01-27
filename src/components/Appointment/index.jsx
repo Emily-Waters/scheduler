@@ -79,7 +79,7 @@ export default function Appointment(props) {
         <Form
           interviewers={interviewers}
           onSave={save}
-          onCancel={back}
+          onCancel={() => transition(SHOW, true)}
           interviewer={interview.interviewer.id}
           student={interview.student}
         />
@@ -102,7 +102,7 @@ export default function Appointment(props) {
       {mode === ERROR_SAVE && (
         <Error
           message={"An Error occured while saving"}
-          onClose={() => transition(EMPTY, true)}
+          onClose={() => transition(EDIT, true)}
         />
       )}
     </article>
