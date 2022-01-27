@@ -56,10 +56,12 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   useEffect(() => {
+    console.log("USEEFFECT!: ", mode, interview);
     if (interview && mode === EMPTY) {
       transition(SHOW);
     }
-    if (interview === null && mode === SHOW) {
+    if (!interview && mode === SHOW) {
+      console.log("Something!");
       transition(EMPTY);
     }
   }, [interview, transition, mode]);

@@ -7,7 +7,7 @@ export default function useApplicationData() {
   const initialState = {
     day: "Monday",
     days: [],
-    appointments: [],
+    appointments: {},
     interviewers: [],
   };
 
@@ -51,49 +51,52 @@ export default function useApplicationData() {
   // Websocket
   useEffect(() => {
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
     webSocket.onopen = function (event) {
       webSocket.send("ping");
     };
 
     webSocket.onmessage = function (event) {
       const parsed = JSON.parse(event.data);
-      console.log(parsed);
+      console.log("Parsed: ", parsed);
+      console.log("State: ", state);
+
       if (parsed.type === SET_INTERVIEW && parsed.interview) {
-        // const appointment = {
-        //   ...state.appointments[parsed.id],
-        //   interview: { ...parsed.interview },
-        // };
-        // const appointments = {
-        //   ...state.appointments,
-        //   [parsed.id]: appointment,
-        // };
-        // const days = updateSpots(state, appointments, parsed.id);
-        // dispatch({
-        //   type: SET_INTERVIEW,
-        //   value: { appointments: appointments, days: days },
-        // });
-        // bookInterview(parsed.id, parsed.interview);
+        const appointment = {
+          ...state.appointments[parsed.id],
+          interview: { ...parsed.interview },
+        };
+        const appointments = {
+          ...state.appointments,
+          [parsed.id]: appointment,
+        };
+        console.log("Appointments: ", appointments);
+        const days = updateSpots(state, appointments, parsed.id);
+        dispatch({
+          type: SET_INTERVIEW,
+          value: { appointments: appointments, days: days },
+        });
       }
 
       if (parsed.type === SET_INTERVIEW && !parsed.interview) {
-        // const appointment = {
-        //   ...state.appointments[parsed.id],
-        //   interview: { ...parsed.interview },
-        // };
-        // const appointments = {
-        //   ...state.appointments,
-        //   [parsed.id]: appointment,
-        // };
-        // const days = updateSpots(state, appointments, parsed.id);
-        // dispatch({
-        //   type: SET_INTERVIEW,
-        //   value: { appointments: appointments, days: days },
-        // });
-        // cancelInterview(parsed.id, parsed.interview);
+        const appointment = {
+          ...state.appointments[parsed.id],
+          interview: { ...parsed.interview },
+        };
+        const appointments = {
+          ...state.appointments,
+          [parsed.id]: appointment,
+        };
+        const days = updateSpots(state, appointments, parsed.id);
+        dispatch({
+          type: SET_INTERVIEW,
+          value: { appointments: appointments, days: days },
+        });
       }
-      return () => {
-        webSocket.close();
-      };
+    };
+
+    return () => {
+      webSocket.close();
     };
   });
 
