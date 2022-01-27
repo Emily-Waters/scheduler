@@ -96,13 +96,13 @@ export default function Appointment(props) {
       {mode === ERROR_DELETE && (
         <Error
           message={"An Error occured while deleting"}
-          onClose={() => transition(SHOW, true)}
+          onClose={() => back()}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error
           message={"An Error occured while saving"}
-          onClose={() => transition(SHOW, true)}
+          onClose={() => back()}
         />
       )}
     </article>
