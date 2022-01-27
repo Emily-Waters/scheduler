@@ -36,7 +36,7 @@ export default function Appointment(props) {
     transition(SAVING);
     bookInterview(id, interview)
       .then(() => transition(SHOW, true))
-      .catch(() => transition(ERROR_SAVE, true));
+      .catch(() => transition(ERROR_SAVE));
   };
 
   const deleteInterview = () => {
