@@ -17,12 +17,12 @@ export default function useVisualMode(initial) {
 
   function back() {
     const [...newHistory] = history.slice(0, -1);
-    if (newHistory.length > 1) {
+    if (newHistory.length >= 1) {
       setHistory(newHistory);
     }
     newHistory[newHistory.length - 1] &&
       setMode(newHistory[newHistory.length - 1]);
   }
-
+  console.log(history);
   return { mode, transition, back };
 }

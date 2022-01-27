@@ -61,7 +61,7 @@ export default function useApplicationData() {
       if (type === SET_INTERVIEW) {
         const appointment = {
           ...state.appointments[id],
-          interview: { ...interview },
+          interview: interview ? { ...interview } : null,
         };
         const appointments = {
           ...state.appointments,
