@@ -22,6 +22,9 @@ react-dom: ^16.9.0,
 react-scripts: “3.0.0”
 }
 
+scheduler-api
+https://github.com/Emily-Waters/scheduler-api
+
 ## Running Webpack Development Server
 
 ```sh
