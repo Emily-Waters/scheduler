@@ -5,15 +5,12 @@ import {
   cleanup,
   waitForElement,
   fireEvent,
-  prettyDOM,
   getByText,
   getAllByText,
   getAllByAltText,
   getByPlaceholderText,
   getAllByTestId,
   waitForElementToBeRemoved,
-  queryByText,
-  within,
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -72,6 +69,7 @@ describe("Appointment", () => {
     const day = await waitForElement(() => getAllByTestId(container, "day")[0]);
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
+
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -83,7 +81,7 @@ describe("Appointment", () => {
     fireEvent.click(saveBtn);
     await waitForElementToBeRemoved(() => getByText(container, "Saving"));
     const day = await waitForElement(() => getAllByTestId(container, "day")[0]);
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 });
 

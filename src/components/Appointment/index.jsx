@@ -27,7 +27,7 @@ export default function Appointment(props) {
         transition(SHOW);
       })
       .catch(() => {
-        transition(ERROR_SAVE, true);
+        transition(ERROR_SAVE);
       });
   }
 
@@ -73,7 +73,7 @@ export default function Appointment(props) {
           student={interview.student}
           interviewer={interview.interviewer}
           onEdit={() => transition(EDIT)}
-          onDelete={() => transition(CONFIRMDELETE, true)}
+          onDelete={() => transition(CONFIRMDELETE)}
         />
       )}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -88,7 +88,7 @@ export default function Appointment(props) {
         <Form
           interviewers={interviewers}
           onSave={save}
-          onCancel={back}
+          onCancel={() => transition(SHOW, true)}
           interviewer={interview.interviewer.id}
           student={interview.student}
         />
@@ -96,7 +96,7 @@ export default function Appointment(props) {
       {mode === CONFIRMDELETE && (
         <Confirm
           message={"Are you sure you would like to cancel this interview?"}
-          onDelete={() => transition(SHOW, true)}
+          onDelete={() => back()}
           onConfirm={deleteInterview}
         />
       )}
@@ -105,13 +105,13 @@ export default function Appointment(props) {
       {mode === ERROR_DELETE && (
         <Error
           message={"An Error occured while deleting"}
-          onClose={() => transition(SHOW, true)}
+          onClose={() => back()}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error
           message={"An Error occured while saving"}
-          onClose={() => transition(EMPTY, true)}
+          onClose={() => back()}
         />
       )}
     </article>
