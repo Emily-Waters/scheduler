@@ -5,15 +5,12 @@ import {
   cleanup,
   waitForElement,
   fireEvent,
-  prettyDOM,
   getByText,
   getAllByText,
   getAllByAltText,
   getByPlaceholderText,
   getAllByTestId,
   waitForElementToBeRemoved,
-  queryByText,
-  within,
 } from "@testing-library/react";
 
 import Application from "components/Application";
