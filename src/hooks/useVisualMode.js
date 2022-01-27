@@ -6,7 +6,7 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   function transition(current, replace) {
-    const newHistory = [...history];
+    const [...newHistory] = history;
     if (replace && newHistory.length > 1) {
       newHistory.pop();
     }
@@ -16,7 +16,7 @@ export default function useVisualMode(initial) {
   }
 
   function back() {
-    const newHistory = history.slice(0, -1);
+    const [...newHistory] = history.slice(0, -1);
     if (newHistory.length > 1) {
       setHistory(newHistory);
     }

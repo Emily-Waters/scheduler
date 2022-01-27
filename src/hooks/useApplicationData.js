@@ -57,44 +57,23 @@ export default function useApplicationData() {
     };
 
     webSocket.onmessage = function (event) {
-      const parsed = JSON.parse(event.data);
-      console.log("Parsed: ", parsed);
-      console.log("State: ", state);
-
-      if (parsed.type === SET_INTERVIEW && parsed.interview) {
+      const { type, id, interview } = JSON.parse(event.data);
+      if (type === SET_INTERVIEW) {
         const appointment = {
-          ...state.appointments[parsed.id],
-          interview: { ...parsed.interview },
+          ...state.appointments[id],
+          interview: { ...interview },
         };
         const appointments = {
           ...state.appointments,
-          [parsed.id]: appointment,
+          [id]: appointment,
         };
-        console.log("Appointments: ", appointments);
-        const days = updateSpots(state, appointments, parsed.id);
+        const days = updateSpots(state, appointments, id);
         dispatch({
-          type: SET_INTERVIEW,
-          value: { appointments: appointments, days: days },
-        });
-      }
-
-      if (parsed.type === SET_INTERVIEW && !parsed.interview) {
-        const appointment = {
-          ...state.appointments[parsed.id],
-          interview: { ...parsed.interview },
-        };
-        const appointments = {
-          ...state.appointments,
-          [parsed.id]: appointment,
-        };
-        const days = updateSpots(state, appointments, parsed.id);
-        dispatch({
-          type: SET_INTERVIEW,
+          type: type,
           value: { appointments: appointments, days: days },
         });
       }
     };
-
     return () => {
       webSocket.close();
     };
@@ -139,10 +118,10 @@ export default function useApplicationData() {
     );
   }
 
-  function cancelInterview(id, interview) {
+  function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
-      interview: interview,
+      interview: null,
     };
     const appointments = {
       ...state.appointments,
