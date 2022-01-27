@@ -54,11 +54,48 @@ export default function useApplicationData() {
     webSocket.onopen = function (event) {
       webSocket.send("ping");
     };
+
     webSocket.onmessage = function (event) {
       const parsed = JSON.parse(event.data);
       console.log(parsed);
+      if (parsed.type === SET_INTERVIEW && parsed.interview) {
+        // const appointment = {
+        //   ...state.appointments[parsed.id],
+        //   interview: { ...parsed.interview },
+        // };
+        // const appointments = {
+        //   ...state.appointments,
+        //   [parsed.id]: appointment,
+        // };
+        // const days = updateSpots(state, appointments, parsed.id);
+        // dispatch({
+        //   type: SET_INTERVIEW,
+        //   value: { appointments: appointments, days: days },
+        // });
+        // bookInterview(parsed.id, parsed.interview);
+      }
+
+      if (parsed.type === SET_INTERVIEW && !parsed.interview) {
+        // const appointment = {
+        //   ...state.appointments[parsed.id],
+        //   interview: { ...parsed.interview },
+        // };
+        // const appointments = {
+        //   ...state.appointments,
+        //   [parsed.id]: appointment,
+        // };
+        // const days = updateSpots(state, appointments, parsed.id);
+        // dispatch({
+        //   type: SET_INTERVIEW,
+        //   value: { appointments: appointments, days: days },
+        // });
+        // cancelInterview(parsed.id, parsed.interview);
+      }
+      return () => {
+        webSocket.close();
+      };
     };
-  }, []);
+  });
 
   // Retrieves data from the server database to populate Appointments, Interviewers and Days
   useEffect(() => {

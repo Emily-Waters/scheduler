@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Components
 import Confirm from "./Confirm";
 import Empty from "./Empty";
@@ -33,7 +33,7 @@ export default function Appointment(props) {
 
   function deleteInterview() {
     const interview = null;
-    transition(DELETING);
+    transition(DELETING, true);
     cancelInterview(id, interview)
       .then(() => {
         transition(EMPTY);
@@ -55,10 +55,19 @@ export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
+  useEffect(() => {
+    if (interview && mode === EMPTY) {
+      transition(SHOW);
+    }
+    if (interview === null && mode === SHOW) {
+      transition(EMPTY);
+    }
+  }, [interview, transition, mode]);
+
   return (
     <article className="appointment">
       <Header time={time} />
-      {mode === SHOW && (
+      {mode === SHOW && interview && (
         <Show
           id={interview.id}
           student={interview.student}
